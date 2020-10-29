@@ -1,0 +1,12 @@
+body {
+  background-image:
+url('background.jpg');
+}
+<div class="buttons">
+.ImgText{
+    width:auto;
+    height:1.5em;
+    vertical-align:text-top;
+animation-iteration-count: infinite;
+  }
+  

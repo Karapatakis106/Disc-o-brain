@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Script
+Name=CD Masterbox
+Comment=Format, burn and get info about your CD & CD Drive
+Icon=/home/CD Masterbox Data/img/icon/Clear.png
+Exec=/home/CD Masterbox Data/run.sh
+Terminal=true
