@@ -122,10 +122,33 @@ child();
 </style>
 <button onclick="ButtonStart()">Eject</button><img class="ImgText" src="eject.png">
 <?php 'Rip.php';?>
-<button type="button" onclick="Rip.php/'1'">Rip CD Data</button><img class="ImgText" src="rip.png">
+<button type="button" onclick="Rip.php/'1'">Rip Audio CD **BETA**</button><img class="ImgText" src="rip.png">
+<script>function ButtonStart(){
+console.log ('discobrain');
 
-</body>
+var exec = require('child_process').exec, child;
 
-
+child = exec('/bin/bash','-lc', '/home/$USER/Disc-o-brain Data/tools/CDformat.sh',
+        function (error, stdout, stderr) {
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if (error !== null) {
+         console.log('exec error: ' + error);
+    }
+});
+child();
   
+  
+   console.log('Pushed')
+}
+</script>
+<style>
+  .ImgText{
+    width:auto;
+    height:1.5em;
+    vertical-align:text-top;
+  }  
+</style>
+<button onclick="ButtonStart()">CD Data Rip **BETA**</button><img class="ImgText" src="rip.png">
+</body>
 </head>
