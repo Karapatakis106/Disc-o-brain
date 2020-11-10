@@ -16,8 +16,6 @@
   
   bootUSB="Make a bootable USB drive"
   
-  cdAudioRIP="Rip Audio Files"
-  
   formatUSB="Format your usb"
 
 echo "Select your option: "
@@ -94,8 +92,6 @@ else
   
 }
 
-
-
 if $SELECTED=bootUSB
   then {
   lsblk
@@ -131,8 +127,12 @@ else
 
 if $SELECTED=ripdata
   then {
-cd /mnt/cdrom
-FILE=`zenity --file-selection --title="Select a File by CD to copy it"`
+    echo "Select your Type of disc that you have inserted: 1. DVD-RW 2. CD-RW 3. CD-ROM 4. DVD-ROM "
+      read seldisc
+if $SELDISC=DVD-ROM
+  then {
+cd /mnt/dvdrom
+FILE=`zenity --file-selection --title="Select a File to copy it"`
 
 case $? in
          0)
@@ -144,28 +144,143 @@ case $? in
 esac
 cp $FILE /home/$USER/Desktop
 cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
 }
+
+if $SELDISC=4
+  then {
+cd /mnt/dvdrom
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
+if $SELDISC=DVD-RW
+  then {
+cd /mnt/dvdrw
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
+if $SELDISC=1
+  then {
+cd /mnt/dvdrw
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
+if $SELDISC=CD-ROM
+  then {
+cd /mnt/cdrom
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
+if $SELDISC=3
+  then {
+cd /mnt/cdrom
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
+if $SELDISC=CD-RW
+  then {
+cd /mnt/cdrw
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
+if $SELDISC=2
+  then {
+cd /mnt/cdrw
+FILE=`zenity --file-selection --title="Select a File to copy it"`
+
+case $? in
+         0)
+                echo "\"$FILE\" selected.";;
+         1)
+                echo "No file selected.";;
+        -1)
+                echo "An unexpected error has occurred.";;
+esac
+cp $FILE /home/$USER/Desktop
+cd /home/$USER/Desktop && xdg-open /Desktop
+else
+  echo "Your type is not found.. "
+}
+
 else
   echo "Select an option please.. "
-
-if $SELECTED=cdAudioRIP
-then
-  python import pymedia.removable.cd as cd
-
-def readTrack(track, offset, bytes):
-  cd.init()
-  if cd.getCount() == 0:
-    print ('There is no cdrom found. Bailing out...')
-    return 0
-
-  c = cd.CD(0)
-  props = c.getProperties()
-  if props['type'] != 'AudioCD':
-    print ('Media in %s has type %s, not AudioCD. Cannot read audio data.') % (c.getName(), props['type'])
-    return 0
-
-  tr0 = c.open(props['titles'][track - 1]['name'])
-  tr0.seek(offset, cd.SEEK_SET)
-  return tr0.read(bytes)
-else
-  echo "Select an option please..."
+}
